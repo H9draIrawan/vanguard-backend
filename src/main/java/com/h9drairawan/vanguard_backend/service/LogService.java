@@ -1,4 +1,4 @@
 package com.h9drairawan.vanguard_backend.service;
 
-public class LogService {
+public interface LogService {
 }

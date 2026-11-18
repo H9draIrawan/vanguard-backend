@@ -1,4 +1,7 @@
 package com.h9drairawan.vanguard_backend.repository;
 
-public interface ItemRepository {
+import com.h9drairawan.vanguard_backend.entity.Item;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ItemRepository extends JpaRepository<Item, Long> {
 }
