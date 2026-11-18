@@ -4,7 +4,7 @@ import com.h9drairawan.vanguard_backend.entity.Role;
 
 import java.time.LocalDateTime;
 
-public record UserResponseDto(
+public record UserResponse(
         String name,
         String email,
         Role role,

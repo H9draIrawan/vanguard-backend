@@ -1,9 +1,8 @@
 package com.h9drairawan.vanguard_backend.service;
 
-import com.h9drairawan.vanguard_backend.dto.response.UserResponseDto;
-
-import java.util.List;
+import com.h9drairawan.vanguard_backend.dto.request.UserRequest;
+import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 
 public interface UserService {
-    List<UserResponseDto> getAllUsers();
+    public UserResponse createUser(UserRequest userRequest);
 }
