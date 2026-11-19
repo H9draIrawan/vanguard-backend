@@ -8,7 +8,11 @@ import com.h9drairawan.vanguard_backend.mapper.UserMapper;
 import com.h9drairawan.vanguard_backend.repository.UserRepository;
 import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,6 +23,11 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
+    }
+
+    @Override
+    public Page<User> getAllUsers(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override

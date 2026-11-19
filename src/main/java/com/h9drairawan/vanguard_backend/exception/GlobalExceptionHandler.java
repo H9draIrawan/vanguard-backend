@@ -32,7 +32,6 @@ public class GlobalExceptionHandler {
                 .body(error);
     }
 
-    // Validation error
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult()
@@ -43,7 +42,7 @@ public class GlobalExceptionHandler {
                                 + error.getDefaultMessage()
                 )
                 .findFirst()
-                .orElse("Data tidak valid");
+                .orElse("Data not valid");
 
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),

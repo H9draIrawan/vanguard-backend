@@ -1,6 +1,7 @@
 package com.h9drairawan.vanguard_backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class Log {
     @Column(length = 255)
     private String description;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
