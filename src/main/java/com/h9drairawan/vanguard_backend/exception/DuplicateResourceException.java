@@ -1,0 +1,7 @@
+package com.h9drairawan.vanguard_backend.exception;
+
+public class DuplicateResourceException extends RuntimeException {
+    public DuplicateResourceException(String message) {
+        super(message);
+    }
+}

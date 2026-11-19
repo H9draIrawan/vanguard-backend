@@ -3,15 +3,26 @@ package com.h9drairawan.vanguard_backend.mapper;
 import com.h9drairawan.vanguard_backend.dto.request.UserRequest;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 import com.h9drairawan.vanguard_backend.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface UserMapper {
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    User toEntity(UserRequest userRequest);
+@Component
+public class UserMapper {
+    public User toEntity(UserRequest dto) {
+        User entity = new User();
+        entity.setName(dto.name());
+        entity.setEmail(dto.email());
+        entity.setPassword(dto.password());
+        entity.setRole(dto.role());
+        return entity;
+    }
 
-    UserResponse toResponse(User user);
+    public UserResponse toResponse(User entity) {
+        return new UserResponse(
+                entity.getName(),
+                entity.getEmail(),
+                entity.getRole(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt()
+        );
+    }
 }

@@ -4,5 +4,5 @@ import com.h9drairawan.vanguard_backend.dto.request.UserRequest;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 
 public interface UserService {
-    public UserResponse createUser(UserRequest userRequest);
+    UserResponse createUser(UserRequest userRequest);
 }
