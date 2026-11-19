@@ -1,13 +1,14 @@
 package com.h9drairawan.vanguard_backend.mapper;
 
-import com.h9drairawan.vanguard_backend.dto.request.RoleRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleCreateRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.RoleResponse;
 import com.h9drairawan.vanguard_backend.entity.Role;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RoleMapper {
-    public Role toEntity(RoleRequest dto) {
+    public Role toEntity(RoleCreateRequest dto) {
         Role entity = new Role();
         entity.setName(dto.name());
         entity.setDescription(dto.description());
@@ -21,5 +22,10 @@ public class RoleMapper {
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );
+    }
+
+    public void updateEntity(Role entity, RoleUpdateRequest dto) {
+        entity.setName(dto.name());
+        entity.setDescription(dto.description());
     }
 }

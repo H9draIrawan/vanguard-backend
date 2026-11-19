@@ -5,8 +5,10 @@ import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 import com.h9drairawan.vanguard_backend.entity.Role;
 import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.exception.DuplicateResourceException;
+import com.h9drairawan.vanguard_backend.exception.ResourceNotFoundException;
 import com.h9drairawan.vanguard_backend.mapper.RoleMapper;
 import com.h9drairawan.vanguard_backend.mapper.UserMapper;
+import com.h9drairawan.vanguard_backend.repository.RoleRepository;
 import com.h9drairawan.vanguard_backend.repository.UserRepository;
 import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.transaction.Transactional;
@@ -18,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleMapper roleMapper) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.userMapper = userMapper;
-        this.roleMapper = roleMapper;
     }
 
     @Override
@@ -39,10 +41,13 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateResourceException("Email " + dto.email() + " already exist");
         }
 
-        Role role = roleMapper.toEntity(dto.roleRequest());
-        User user = userMapper.toEntity(dto);
+        Role role = roleRepository.findById(dto.roleId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role Not found"));
 
+        User user = userMapper.toEntity(dto);
         user.setRole(role);
+
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
     }

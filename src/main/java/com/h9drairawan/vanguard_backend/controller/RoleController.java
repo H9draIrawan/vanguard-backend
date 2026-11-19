@@ -1,6 +1,7 @@
 package com.h9drairawan.vanguard_backend.controller;
 
-import com.h9drairawan.vanguard_backend.dto.request.RoleRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleCreateRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.RoleResponse;
 import com.h9drairawan.vanguard_backend.service.RoleService;
 import jakarta.validation.Valid;
@@ -25,8 +26,19 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<RoleResponse> createRole(@Valid @RequestBody RoleRequest request) {
+    public ResponseEntity<RoleResponse> createRole(
+            @Valid @RequestBody RoleCreateRequest request
+    ) {
         RoleResponse roleResponse = service.createRole(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(roleResponse);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RoleResponse> updateRole(
+            @PathVariable Long id,
+            @Valid @RequestBody RoleUpdateRequest request
+    ) {
+        RoleResponse roleResponse = service.updateRole(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(roleResponse);
     }
 }

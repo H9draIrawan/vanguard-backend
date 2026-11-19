@@ -1,9 +1,11 @@
 package com.h9drairawan.vanguard_backend.service.impl;
 
-import com.h9drairawan.vanguard_backend.dto.request.RoleRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleCreateRequest;
+import com.h9drairawan.vanguard_backend.dto.request.RoleUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.RoleResponse;
 import com.h9drairawan.vanguard_backend.entity.Role;
 import com.h9drairawan.vanguard_backend.exception.DuplicateResourceException;
+import com.h9drairawan.vanguard_backend.exception.ResourceNotFoundException;
 import com.h9drairawan.vanguard_backend.mapper.RoleMapper;
 import com.h9drairawan.vanguard_backend.repository.RoleRepository;
 import com.h9drairawan.vanguard_backend.service.RoleService;
@@ -29,12 +31,28 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleResponse createRole(RoleRequest dto) {
+    public RoleResponse createRole(RoleCreateRequest dto) {
         if (roleRepository.existsByName(dto.name())) {
             throw new DuplicateResourceException("Role " + dto.name() + " already exist");
         }
         Role role = roleMapper.toEntity(dto);
         Role save = roleRepository.save(role);
         return roleMapper.toResponse(save);
+    }
+
+    @Override
+    public RoleResponse updateRole(Long id, RoleUpdateRequest dto) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Role not found"
+                        ));
+        if (roleRepository.existsByName(dto.name())) {
+            throw new DuplicateResourceException("Role already exist");
+        }
+
+        roleMapper.updateEntity(role, dto);
+        roleRepository.save(role);
+        return roleMapper.toResponse(role);
     }
 }
