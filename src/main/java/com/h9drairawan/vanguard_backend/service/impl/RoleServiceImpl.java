@@ -15,26 +15,26 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
-    private final RoleRepository repository;
-    private final RoleMapper mapper;
+    private final RoleRepository roleRepository;
+    private final RoleMapper roleMapper;
 
-    public RoleServiceImpl(RoleRepository repository, RoleMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public RoleServiceImpl(RoleRepository roleRepository, RoleMapper roleMapper) {
+        this.roleRepository = roleRepository;
+        this.roleMapper = roleMapper;
     }
 
     @Override
     public List<RoleResponse> getAllRoles() {
-        return repository.findAll().stream().map(mapper::toResponse).toList();
+        return roleRepository.findAll().stream().map(roleMapper::toResponse).toList();
     }
 
     @Override
     public RoleResponse createRole(RoleRequest dto) {
-        if (repository.existsByName(dto.name())) {
+        if (roleRepository.existsByName(dto.name())) {
             throw new DuplicateResourceException("Role " + dto.name() + " already exist");
         }
-        Role role = mapper.toEntity(dto);
-        Role save = repository.save(role);
-        return mapper.toResponse(save);
+        Role role = roleMapper.toEntity(dto);
+        Role save = roleRepository.save(role);
+        return roleMapper.toResponse(save);
     }
 }

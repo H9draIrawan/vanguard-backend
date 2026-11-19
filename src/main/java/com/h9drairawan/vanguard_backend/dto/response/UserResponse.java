@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public record UserResponse(
         String name,
         String email,
-        Role role,
+        RoleResponse roleResponse,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

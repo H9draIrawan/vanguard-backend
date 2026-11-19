@@ -7,12 +7,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
+    private final RoleMapper roleMapper;
+
+    public UserMapper(RoleMapper roleMapper) {
+        this.roleMapper = roleMapper;
+    }
+
     public User toEntity(UserRequest dto) {
         User entity = new User();
         entity.setName(dto.name());
         entity.setEmail(dto.email());
         entity.setPassword(dto.password());
-        entity.setRole(dto.role());
         return entity;
     }
 
@@ -20,7 +25,9 @@ public class UserMapper {
         return new UserResponse(
                 entity.getName(),
                 entity.getEmail(),
-                entity.getRole(),
+                entity.getRole() != null
+                        ? roleMapper.toResponse(entity.getRole())
+                        : null,
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

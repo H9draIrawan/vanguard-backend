@@ -1,6 +1,7 @@
 package com.h9drairawan.vanguard_backend.controller;
 
 import com.h9drairawan.vanguard_backend.dto.request.UserRequest;
+import com.h9drairawan.vanguard_backend.dto.response.RoleResponse;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.service.UserService;
@@ -17,13 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private final UserService service;
+    private final UserService userService;
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
@@ -38,21 +41,10 @@ public class UserController {
                 Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<User> userPage = service.getAllUsers(pageable);
-
-        List<UserResponse> users = userPage.getContent()
-                .stream()
-                .map(user -> new UserResponse(
-                        user.getName(),
-                        user.getEmail(),
-                        user.getRole(),
-                        user.getCreatedAt(),
-                        user.getUpdatedAt()
-                ))
-                .toList();
+        Page<UserResponse> userPage = userService.getAllUsers(pageable);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("users", users);
+        response.put("users", userPage.getContent());
         response.put("currentPage", userPage.getNumber());
         response.put("totalItems", userPage.getTotalElements());
         response.put("totalPages", userPage.getTotalPages());
@@ -66,7 +58,7 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(
             @Valid @RequestBody UserRequest request
     ) {
-        UserResponse userResponse = service.createUser(request);
+        UserResponse userResponse = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 }
