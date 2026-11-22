@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse createUser(UserCreateRequest dto) {
         if (userRepository.existsByEmail(dto.email())) {
-            throw new DuplicateResourceException("Email " + dto.email() + " already exist");
+            throw new DuplicateResourceException("User email " + dto.email() + " already exist");
         }
 
         Role role = roleRepository.findById(dto.roleId())

@@ -18,16 +18,13 @@ public class Category {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private Boolean status;
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> items;
 
     public Long getId() {
@@ -48,14 +45,6 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {

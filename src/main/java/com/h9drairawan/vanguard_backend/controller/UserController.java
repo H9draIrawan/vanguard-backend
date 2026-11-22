@@ -54,8 +54,8 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(
             @Valid @RequestBody UserCreateRequest request
     ) {
-        UserResponse userResponse = userService.createUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
+        UserResponse response = userService.createUser(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
@@ -63,8 +63,8 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse userResponse = userService.updateUser(id, request);
-        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+        UserResponse response = userService.updateUser(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("/{id}/password")
@@ -72,8 +72,8 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse userResponse = userService.updateUserPassword(id, request);
-        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+        UserResponse response = userService.updateUserPassword(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("/{id}/role")
@@ -81,7 +81,7 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse userResponse = userService.updateUserRole(id, request);
-        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+        UserResponse response = userService.updateUserRole(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

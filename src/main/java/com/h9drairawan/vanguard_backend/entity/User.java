@@ -34,10 +34,13 @@ public class User {
     @JoinColumn(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Item> items;
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Item> itemsCreatedBy;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "updatedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Item> itemsUpdatedBy;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Log> logs;
 
     public Long getId() {
@@ -100,12 +103,20 @@ public class User {
         this.role = role;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Item> getItemsCreatedBy() {
+        return itemsCreatedBy;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItemsCreatedBy(List<Item> itemsCreatedBy) {
+        this.itemsCreatedBy = itemsCreatedBy;
+    }
+
+    public List<Item> getItemsUpdatedBy() {
+        return itemsUpdatedBy;
+    }
+
+    public void setItemsUpdatedBy(List<Item> itemsUpdatedBy) {
+        this.itemsUpdatedBy = itemsUpdatedBy;
     }
 
     public List<Log> getLogs() {

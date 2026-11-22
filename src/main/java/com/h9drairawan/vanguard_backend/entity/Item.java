@@ -15,7 +15,7 @@ public class Item {
     private String name;
 
     @Column(nullable = false)
-    private String code;
+    private String sku;
 
     @Column(length = 255)
     private String description;
@@ -45,10 +45,6 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
     private Category category;
 
     public Long getId() {
@@ -63,12 +59,12 @@ public class Item {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public String getSku() {
+        return sku;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getDescription() {
@@ -133,14 +129,6 @@ public class Item {
 
     public void setUpdatedBy(User updatedBy) {
         this.updatedBy = updatedBy;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Category getCategory() {

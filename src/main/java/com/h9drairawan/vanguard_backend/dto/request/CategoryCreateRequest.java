@@ -2,7 +2,7 @@ package com.h9drairawan.vanguard_backend.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record RoleRequest(
+public record CategoryCreateRequest(
         @NotBlank
         String name,
         @NotBlank
