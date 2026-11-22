@@ -23,8 +23,10 @@ public class UserMapper {
 
     public UserResponse toResponse(User entity) {
         return new UserResponse(
+                entity.getId(),
                 entity.getName(),
                 entity.getEmail(),
+                entity.getStatus(),
                 entity.getRole() != null
                         ? roleMapper.toResponse(entity.getRole())
                         : null,

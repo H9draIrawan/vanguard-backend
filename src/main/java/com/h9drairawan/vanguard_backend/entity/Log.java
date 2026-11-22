@@ -1,11 +1,8 @@
 package com.h9drairawan.vanguard_backend.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "logs")
@@ -20,7 +17,6 @@ public class Log {
     @Column(length = 255)
     private String description;
 
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -36,10 +32,6 @@ public class Log {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getAction() {
@@ -60,10 +52,6 @@ public class Log {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public User getUser() {
@@ -88,5 +76,10 @@ public class Log {
 
     public void setTargetType(String targetType) {
         this.targetType = targetType;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 }

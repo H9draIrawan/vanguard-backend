@@ -17,6 +17,7 @@ public class RoleMapper {
 
     public RoleResponse toResponse(Role entity) {
         return new RoleResponse(
+                entity.getId(),
                 entity.getName(),
                 entity.getDescription(),
                 entity.getCreatedAt(),
