@@ -54,6 +54,10 @@ public class Log {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public User getUser() {
         return user;
     }
@@ -76,10 +80,5 @@ public class Log {
 
     public void setTargetType(String targetType) {
         this.targetType = targetType;
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
     }
 }

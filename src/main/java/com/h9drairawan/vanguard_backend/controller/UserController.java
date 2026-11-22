@@ -1,9 +1,8 @@
 package com.h9drairawan.vanguard_backend.controller;
 
-import com.h9drairawan.vanguard_backend.dto.request.UserRequest;
-import com.h9drairawan.vanguard_backend.dto.response.RoleResponse;
+import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
+import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
-import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -15,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -56,9 +52,36 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(
-            @Valid @RequestBody UserRequest request
+            @Valid @RequestBody UserCreateRequest request
     ) {
         UserResponse userResponse = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequest request
+    ) {
+        UserResponse userResponse = userService.updateUser(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<UserResponse> updateUserPassword(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequest request
+    ) {
+        UserResponse userResponse = userService.updateUserPassword(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+    }
+
+    @PatchMapping("/{id}/role")
+    public ResponseEntity<UserResponse> updateUserRole(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequest request
+    ) {
+        UserResponse userResponse = userService.updateUserRole(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
     }
 }
