@@ -41,4 +41,12 @@ public class RoleController {
         RoleResponse response = service.updateRole(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(
+            @PathVariable Long id
+    ) {
+        service.deleteRole(id);
+        return ResponseEntity.ok().build();
+    }
 }

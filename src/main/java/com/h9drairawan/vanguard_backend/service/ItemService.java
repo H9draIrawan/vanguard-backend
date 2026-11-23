@@ -12,4 +12,6 @@ public interface ItemService {
     ItemResponse createItem(ItemCreateRequest dto);
 
     ItemResponse updateItem(Long id, ItemUpdateRequest dto);
+
+    void deleteItem(Long id);
 }

@@ -22,13 +22,13 @@ import java.time.LocalDateTime;
 
 @Service
 @Transactional
-public class ItemServiceIml implements ItemService {
+public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
 
-    public ItemServiceIml(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, ItemMapper itemMapper) {
+    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, CategoryRepository categoryRepository, ItemMapper itemMapper) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
@@ -95,5 +95,15 @@ public class ItemServiceIml implements ItemService {
         item.setUpdatedAt(LocalDateTime.now());
         itemRepository.save(item);
         return itemMapper.toResponse(item);
+    }
+
+    @Override
+    public void deleteItem(Long id) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> (
+                        new ResourceNotFoundException("Item not found")
+                ));
+
+        itemRepository.deleteById(id);
     }
 }

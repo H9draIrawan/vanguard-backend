@@ -56,4 +56,14 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.save(role);
         return roleMapper.toResponse(role);
     }
+
+    @Override
+    public void deleteRole(Long id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Role not found"
+                        ));
+        roleRepository.deleteById(id);
+    }
 }

@@ -40,9 +40,6 @@ public class User {
     @OneToMany(mappedBy = "updatedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> itemsUpdatedBy;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Log> logs;
-
     public Long getId() {
         return id;
     }
@@ -117,14 +114,6 @@ public class User {
 
     public void setItemsUpdatedBy(List<Item> itemsUpdatedBy) {
         this.itemsUpdatedBy = itemsUpdatedBy;
-    }
-
-    public List<Log> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(List<Log> logs) {
-        this.logs = logs;
     }
 }
 

@@ -19,10 +19,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private final UserService userService;
+    private final UserService service;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
     @GetMapping
@@ -37,7 +37,7 @@ public class UserController {
                 Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<UserResponse> userPage = userService.getAllUsers(pageable);
+        Page<UserResponse> userPage = service.getAllUsers(pageable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("users", userPage.getContent());
@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(
             @Valid @RequestBody UserCreateRequest request
     ) {
-        UserResponse response = userService.createUser(request);
+        UserResponse response = service.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -63,7 +63,7 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse response = userService.updateUser(id, request);
+        UserResponse response = service.updateUser(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -72,7 +72,7 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse response = userService.updateUserPassword(id, request);
+        UserResponse response = service.updateUserPassword(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -81,7 +81,15 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        UserResponse response = userService.updateUserRole(id, request);
+        UserResponse response = service.updateUserRole(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable Long id
+    ) {
+        service.deleteUser(id);
+        return ResponseEntity.ok().build();
     }
 }

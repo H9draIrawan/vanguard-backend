@@ -12,4 +12,6 @@ public interface RoleService {
     RoleResponse createRole(RoleCreateRequest dto);
 
     RoleResponse updateRole(Long id, RoleUpdateRequest dto);
+
+    void deleteRole(Long id);
 }

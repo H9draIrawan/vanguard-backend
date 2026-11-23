@@ -107,4 +107,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return userMapper.toResponse(user);
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User not found"
+                        ));
+
+        userRepository.deleteById(id);
+    }
 }
