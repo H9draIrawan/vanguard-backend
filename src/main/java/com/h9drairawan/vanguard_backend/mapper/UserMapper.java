@@ -1,7 +1,6 @@
 package com.h9drairawan.vanguard_backend.mapper;
 
 import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
-import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
 import com.h9drairawan.vanguard_backend.entity.User;
 import org.springframework.stereotype.Component;
@@ -20,9 +19,8 @@ public class UserMapper {
         User entity = new User();
         LocalDateTime now = LocalDateTime.now();
 
-        entity.setName(dto.name());
+        entity.setUsername(dto.username());
         entity.setEmail(dto.email());
-        entity.setPassword(dto.password());
         entity.setCreatedAt(now);
         entity.setUpdatedAt(now);
         return entity;
@@ -31,7 +29,7 @@ public class UserMapper {
     public UserResponse toResponse(User entity) {
         return new UserResponse(
                 entity.getId(),
-                entity.getName(),
+                entity.getUsername(),
                 entity.getEmail(),
                 entity.getStatus(),
                 roleMapper.toResponse(entity.getRole()),

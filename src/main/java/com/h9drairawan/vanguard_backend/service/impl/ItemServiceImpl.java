@@ -44,7 +44,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemResponse createItem(ItemCreateRequest dto) {
         if (itemRepository.existsByName(dto.name())) {
-            throw new DuplicateResourceException("Item name " + dto.name() + " already exist");
+            throw new DuplicateResourceException("Item username " + dto.name() + " already exist");
         } else if (itemRepository.existsBySku(dto.sku())) {
             throw new DuplicateResourceException("Item sku " + dto.sku() + " already exist");
         }

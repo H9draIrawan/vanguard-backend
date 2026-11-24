@@ -33,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponse createRole(RoleCreateRequest dto) {
         if (roleRepository.existsByName(dto.name())) {
-            throw new DuplicateResourceException("Role name " + dto.name() + " already exist");
+            throw new DuplicateResourceException("Role username " + dto.name() + " already exist");
         }
         Role role = roleMapper.toEntity(dto);
         Role save = roleRepository.save(role);

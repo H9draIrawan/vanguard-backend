@@ -14,6 +14,7 @@ import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,11 +25,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
                         new ResourceNotFoundException("Role Not found"));
 
         User user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.password()));
         user.setRole(role);
 
         User saved = userRepository.save(user);
@@ -63,11 +67,11 @@ public class UserServiceImpl implements UserService {
                         ));
         if (userRepository.existsByEmail(dto.email())) {
             throw new DuplicateResourceException("User email already exist");
-        } else if (userRepository.existsByName(dto.name())) {
-            throw new DuplicateResourceException("User name already exist");
+        } else if (userRepository.existsByName(dto.username())) {
+            throw new DuplicateResourceException("User username already exist");
         }
 
-        user.setName(dto.name());
+        user.setUsername(dto.username());
         user.setEmail(dto.email());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);

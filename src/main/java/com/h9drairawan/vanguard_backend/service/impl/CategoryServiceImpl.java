@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse createCategory(CategoryCreateRequest dto) {
         if (categoryRepository.existsByName(dto.name())) {
-            throw new DuplicateResourceException("Category name " + dto.name() + " already exist");
+            throw new DuplicateResourceException("Category username " + dto.name() + " already exist");
         }
 
         Category category = categoryMapper.toEntity(dto);
