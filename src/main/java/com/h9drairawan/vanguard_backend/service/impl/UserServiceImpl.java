@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                         ));
         if (userRepository.existsByEmail(dto.email())) {
             throw new DuplicateResourceException("User email already exist");
-        } else if (userRepository.existsByName(dto.username())) {
+        } else if (userRepository.existsByUsername(dto.username())) {
             throw new DuplicateResourceException("User username already exist");
         }
 
