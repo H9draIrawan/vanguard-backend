@@ -21,27 +21,30 @@ public class Warehouse {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
+    private Boolean isActive;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private User user;
-
-    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products;
-
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Inventory> inventories;
 
-    @OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Movement> movements;
+    @OneToMany(mappedBy = "toWarehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Movement> toMovements;
+
+    @OneToMany(mappedBy = "fromWarehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Movement> fromMovements;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -68,6 +71,14 @@ public class Warehouse {
         this.address = address;
     }
 
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -84,22 +95,6 @@ public class Warehouse {
         this.updatedAt = updatedAt;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
     public List<Inventory> getInventories() {
         return inventories;
     }
@@ -108,11 +103,19 @@ public class Warehouse {
         this.inventories = inventories;
     }
 
-    public List<Movement> getMovements() {
-        return movements;
+    public List<Movement> getToMovements() {
+        return toMovements;
     }
 
-    public void setMovements(List<Movement> movements) {
-        this.movements = movements;
+    public void setToMovements(List<Movement> toMovements) {
+        this.toMovements = toMovements;
+    }
+
+    public List<Movement> getFromMovements() {
+        return fromMovements;
+    }
+
+    public void setFromMovements(List<Movement> fromMovements) {
+        this.fromMovements = fromMovements;
     }
 }

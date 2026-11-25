@@ -15,6 +15,8 @@ public class UserMapper {
 
         entity.setUsername(dto.username());
         entity.setEmail(dto.email());
+        entity.setRole("admin");
+        entity.setStatus("active");
         entity.setCreatedAt(now);
         entity.setUpdatedAt(now);
         return entity;

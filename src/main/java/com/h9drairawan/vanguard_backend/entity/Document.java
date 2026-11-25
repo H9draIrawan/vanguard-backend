@@ -14,9 +14,6 @@ public class Document {
     @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false)
-    private String status;
-
     @Column
     private String notes;
 
@@ -27,13 +24,19 @@ public class Document {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    @JoinColumn(nullable = false)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(nullable = false)
+    private Movement movement;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -42,14 +45,6 @@ public class Document {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getNotes() {
@@ -76,19 +71,19 @@ public class Document {
         this.updatedAt = updatedAt;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Movement getMovement() {
+        return movement;
+    }
+
+    public void setMovement(Movement movement) {
+        this.movement = movement;
     }
 }

@@ -11,7 +11,7 @@ public record UserUpdateRequest(
         @Size(min = 8)
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$")
         String password,
-        Boolean status,
+        String status,
         String role
 ) {
 }

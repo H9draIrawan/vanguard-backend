@@ -19,4 +19,7 @@ public interface UserService {
     UserResponse updateUserRole(Long id, UserUpdateRequest dto);
 
     void deleteUser(Long id);
+
+    interface InventoryService {
+    }
 }
