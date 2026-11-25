@@ -3,12 +3,10 @@ package com.h9drairawan.vanguard_backend.service.impl;
 import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
 import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
 import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
-import com.h9drairawan.vanguard_backend.entity.Role;
 import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.exception.DuplicateResourceException;
 import com.h9drairawan.vanguard_backend.exception.ResourceNotFoundException;
 import com.h9drairawan.vanguard_backend.mapper.UserMapper;
-import com.h9drairawan.vanguard_backend.repository.RoleRepository;
 import com.h9drairawan.vanguard_backend.repository.UserRepository;
 import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.transaction.Transactional;
@@ -23,13 +21,11 @@ import java.time.LocalDateTime;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -46,13 +42,8 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateResourceException("User email " + dto.email() + " already exist");
         }
 
-        Role role = roleRepository.findById(dto.roleId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Role Not found"));
-
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.password()));
-        user.setRole(role);
 
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);
@@ -100,13 +91,7 @@ public class UserServiceImpl implements UserService {
                                 "User not found"
                         ));
 
-        Role role = roleRepository.findById(dto.roleId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Role not found"
-                        ));
-
-        user.setRole(role);
+        user.setRole(dto.role());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
         return userMapper.toResponse(user);

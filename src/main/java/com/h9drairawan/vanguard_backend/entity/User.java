@@ -22,7 +22,10 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private Boolean status;
+    private String role;
+
+    @Column(nullable = false)
+    private String status;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -30,15 +33,17 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Role role;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Warehouse> warehouses;
 
-    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> itemsCreatedBy;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products;
 
-    @OneToMany(mappedBy = "updatedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> itemsUpdatedBy;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Document> documents;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Movement> movements;
 
     public Long getId() {
         return id;
@@ -68,11 +73,19 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getStatus() {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -92,28 +105,36 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
-    public List<Item> getItemsCreatedBy() {
-        return itemsCreatedBy;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setItemsCreatedBy(List<Item> itemsCreatedBy) {
-        this.itemsCreatedBy = itemsCreatedBy;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
-    public List<Item> getItemsUpdatedBy() {
-        return itemsUpdatedBy;
+    public List<Document> getDocuments() {
+        return documents;
     }
 
-    public void setItemsUpdatedBy(List<Item> itemsUpdatedBy) {
-        this.itemsUpdatedBy = itemsUpdatedBy;
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    public List<Movement> getMovements() {
+        return movements;
+    }
+
+    public void setMovements(List<Movement> movements) {
+        this.movements = movements;
     }
 }
 

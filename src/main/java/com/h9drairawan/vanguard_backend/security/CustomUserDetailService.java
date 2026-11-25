@@ -2,6 +2,7 @@ package com.h9drairawan.vanguard_backend.security;
 
 import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.repository.UserRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         User user = repository.findByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Username not found")
@@ -25,7 +26,7 @@ public class CustomUserDetailService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole().getName())
+                .roles(user.getRole())
                 .build();
     }
 }

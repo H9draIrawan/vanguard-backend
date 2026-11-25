@@ -9,12 +9,6 @@ import java.time.LocalDateTime;
 
 @Component
 public class UserMapper {
-    private final RoleMapper roleMapper;
-
-    public UserMapper(RoleMapper roleMapper) {
-        this.roleMapper = roleMapper;
-    }
-
     public User toEntity(UserCreateRequest dto) {
         User entity = new User();
         LocalDateTime now = LocalDateTime.now();
@@ -32,7 +26,7 @@ public class UserMapper {
                 entity.getUsername(),
                 entity.getEmail(),
                 entity.getStatus(),
-                roleMapper.toResponse(entity.getRole()),
+                entity.getRole(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

@@ -6,8 +6,8 @@ public record UserResponse(
         Long id,
         String username,
         String email,
-        Boolean status,
-        RoleResponse role,
+        String status,
+        String role,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {

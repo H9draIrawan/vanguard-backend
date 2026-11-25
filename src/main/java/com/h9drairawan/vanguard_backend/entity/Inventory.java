@@ -3,20 +3,16 @@ package com.h9drairawan.vanguard_backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "inventories")
+public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String description;
+    private int qty;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -24,27 +20,24 @@ public class Category {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Item> items;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Warehouse warehouse;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Product product;
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public int getQty() {
+        return qty;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -63,11 +56,19 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
