@@ -1,8 +1,8 @@
 package com.h9drairawan.vanguard_backend.service.impl;
 
-import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
-import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
-import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
+import com.h9drairawan.vanguard_backend.dto.request.CreateUserDto;
+import com.h9drairawan.vanguard_backend.dto.request.UpdateUserDto;
+import com.h9drairawan.vanguard_backend.dto.response.UserDto;
 import com.h9drairawan.vanguard_backend.entity.User;
 import com.h9drairawan.vanguard_backend.exception.DuplicateResourceException;
 import com.h9drairawan.vanguard_backend.exception.ResourceNotFoundException;
@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserResponse> getAllUsers(Pageable pageable) {
+    public Page<UserDto> getAllUsers(Pageable pageable) {
         Page<User> page = userRepository.findAll(pageable);
-        return page.map(userMapper::toResponse);
+        return page.map(userMapper::toDto);
     }
 
     @Override
-    public UserResponse createUser(UserCreateRequest dto) {
+    public UserDto createUser(CreateUserDto dto) {
         if (userRepository.existsByEmail(dto.email())) {
             throw new DuplicateResourceException("User email " + dto.email() + " already exist");
         }
@@ -46,11 +46,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(dto.password()));
 
         User saved = userRepository.save(user);
-        return userMapper.toResponse(saved);
+        return userMapper.toDto(saved);
     }
 
     @Override
-    public UserResponse updateUser(Long id, UserUpdateRequest dto) {
+    public UserDto updateUser(Long id, UpdateUserDto dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
@@ -66,11 +66,11 @@ public class UserServiceImpl implements UserService {
         user.setEmail(dto.email());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
-        return userMapper.toResponse(user);
+        return userMapper.toDto(user);
     }
 
     @Override
-    public UserResponse updateUserPassword(Long id, UserUpdateRequest dto) {
+    public UserDto updateUserPassword(Long id, UpdateUserDto dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
@@ -80,11 +80,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(dto.password());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
-        return userMapper.toResponse(user);
+        return userMapper.toDto(user);
     }
 
     @Override
-    public UserResponse updateUserRole(Long id, UserUpdateRequest dto) {
+    public UserDto updateUserRole(Long id, UpdateUserDto dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(dto.role());
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
-        return userMapper.toResponse(user);
+        return userMapper.toDto(user);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.h9drairawan.vanguard_backend.controller;
 
-import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
-import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
-import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
+import com.h9drairawan.vanguard_backend.dto.request.CreateUserDto;
+import com.h9drairawan.vanguard_backend.dto.request.UpdateUserDto;
+import com.h9drairawan.vanguard_backend.dto.response.UserDto;
 import com.h9drairawan.vanguard_backend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class UserController {
                 Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<UserResponse> userPage = service.getAllUsers(pageable);
+        Page<UserDto> userPage = service.getAllUsers(pageable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("users", userPage.getContent());
@@ -51,37 +51,37 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(
-            @Valid @RequestBody UserCreateRequest request
+    public ResponseEntity<UserDto> createUser(
+            @Valid @RequestBody CreateUserDto request
     ) {
-        UserResponse response = service.createUser(request);
+        UserDto response = service.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(
+    public ResponseEntity<UserDto> updateUser(
             @PathVariable Long id,
-            @Valid @RequestBody UserUpdateRequest request
+            @Valid @RequestBody UpdateUserDto request
     ) {
-        UserResponse response = service.updateUser(id, request);
+        UserDto response = service.updateUser(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("/{id}/password")
-    public ResponseEntity<UserResponse> updateUserPassword(
+    public ResponseEntity<UserDto> updateUserPassword(
             @PathVariable Long id,
-            @Valid @RequestBody UserUpdateRequest request
+            @Valid @RequestBody UpdateUserDto request
     ) {
-        UserResponse response = service.updateUserPassword(id, request);
+        UserDto response = service.updateUserPassword(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("/{id}/role")
-    public ResponseEntity<UserResponse> updateUserRole(
+    public ResponseEntity<UserDto> updateUserRole(
             @PathVariable Long id,
-            @Valid @RequestBody UserUpdateRequest request
+            @Valid @RequestBody UpdateUserDto request
     ) {
-        UserResponse response = service.updateUserRole(id, request);
+        UserDto response = service.updateUserRole(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

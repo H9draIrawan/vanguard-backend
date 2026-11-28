@@ -1,22 +1,22 @@
 package com.h9drairawan.vanguard_backend.service;
 
-import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
-import com.h9drairawan.vanguard_backend.dto.request.UserUpdateRequest;
-import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
+import com.h9drairawan.vanguard_backend.dto.request.CreateUserDto;
+import com.h9drairawan.vanguard_backend.dto.request.UpdateUserDto;
+import com.h9drairawan.vanguard_backend.dto.response.UserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    Page<UserResponse> getAllUsers(Pageable pageable);
+    Page<UserDto> getAllUsers(Pageable pageable);
 
-    UserResponse createUser(UserCreateRequest dto);
+    UserDto createUser(CreateUserDto dto);
 
-    UserResponse updateUser(Long id, UserUpdateRequest dto);
+    UserDto updateUser(Long id, UpdateUserDto dto);
 
-    UserResponse updateUserPassword(Long id, UserUpdateRequest dto);
+    UserDto updateUserPassword(Long id, UpdateUserDto dto);
 
-    UserResponse updateUserRole(Long id, UserUpdateRequest dto);
+    UserDto updateUserRole(Long id, UpdateUserDto dto);
 
     void deleteUser(Long id);
 

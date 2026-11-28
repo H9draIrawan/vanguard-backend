@@ -1,7 +1,7 @@
 package com.h9drairawan.vanguard_backend.mapper;
 
-import com.h9drairawan.vanguard_backend.dto.request.UserCreateRequest;
-import com.h9drairawan.vanguard_backend.dto.response.UserResponse;
+import com.h9drairawan.vanguard_backend.dto.request.CreateUserDto;
+import com.h9drairawan.vanguard_backend.dto.response.UserDto;
 import com.h9drairawan.vanguard_backend.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -9,28 +9,24 @@ import java.time.LocalDateTime;
 
 @Component
 public class UserMapper {
-    public User toEntity(UserCreateRequest dto) {
+    public User toEntity(CreateUserDto dto) {
         User entity = new User();
         LocalDateTime now = LocalDateTime.now();
 
         entity.setUsername(dto.username());
         entity.setEmail(dto.email());
-        entity.setRole("admin");
-        entity.setStatus("active");
+        entity.setRole(dto.role());
         entity.setCreatedAt(now);
         entity.setUpdatedAt(now);
         return entity;
     }
 
-    public UserResponse toResponse(User entity) {
-        return new UserResponse(
+    public UserDto toDto(User entity) {
+        return new UserDto(
                 entity.getId(),
                 entity.getUsername(),
                 entity.getEmail(),
-                entity.getStatus(),
-                entity.getRole(),
-                entity.getCreatedAt(),
-                entity.getUpdatedAt()
+                entity.getRole()
         );
     }
 }
