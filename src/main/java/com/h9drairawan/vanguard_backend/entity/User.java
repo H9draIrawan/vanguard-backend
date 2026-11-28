@@ -34,7 +34,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> documents;
+    private List<Warehouse> warehouses;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Movement> movements;
@@ -103,12 +103,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public List<Document> getDocuments() {
-        return documents;
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
     }
 
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
     public List<Movement> getMovements() {

@@ -13,13 +13,16 @@ public class Product {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
     private String sku;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private Double price;
 
     @Column(nullable = false)
     private String category;
@@ -34,10 +37,10 @@ public class Product {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Inventory> inventories;
+    private List<Movement> movements;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Movement> movements;
+    private List<Item> items;
 
     public Long getId() {
         return id;
@@ -45,14 +48,6 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSku() {
@@ -63,12 +58,28 @@ public class Product {
         this.sku = sku;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getCategory() {
@@ -103,19 +114,19 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
-    }
-
     public List<Movement> getMovements() {
         return movements;
     }
 
     public void setMovements(List<Movement> movements) {
         this.movements = movements;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

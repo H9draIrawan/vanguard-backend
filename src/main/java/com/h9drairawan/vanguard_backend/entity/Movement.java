@@ -3,10 +3,9 @@ package com.h9drairawan.vanguard_backend.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "movements")
+@Table(name = "Movements")
 public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +18,7 @@ public class Movement {
     private int quantity;
 
     @Column(nullable = false)
-    private String notes;
+    private String note;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -27,24 +26,17 @@ public class Movement {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "movement", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> documents;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
+    private Warehouse warehouse;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Warehouse fromWarehouse;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Warehouse toWarehouse;
 
     public Long getId() {
         return id;
@@ -70,12 +62,12 @@ public class Movement {
         this.quantity = quantity;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -94,14 +86,6 @@ public class Movement {
         this.updatedAt = updatedAt;
     }
 
-    public List<Document> getDocuments() {
-        return documents;
-    }
-
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-
     public User getUser() {
         return user;
     }
@@ -110,27 +94,19 @@ public class Movement {
         this.user = user;
     }
 
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
     public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Warehouse getFromWarehouse() {
-        return fromWarehouse;
-    }
-
-    public void setFromWarehouse(Warehouse fromWarehouse) {
-        this.fromWarehouse = fromWarehouse;
-    }
-
-    public Warehouse getToWarehouse() {
-        return toWarehouse;
-    }
-
-    public void setToWarehouse(Warehouse toWarehouse) {
-        this.toWarehouse = toWarehouse;
     }
 }
